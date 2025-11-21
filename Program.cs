@@ -10,10 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // DEBUG: Log what connection string we're actually getting
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Trim();
 if (string.IsNullOrEmpty(connectionString))
 {
-    connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTION_STRING");
+    connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTION_STRING")?.Trim();
 }
 
 // Register the AppDbContext with the Dependency Injection container.
