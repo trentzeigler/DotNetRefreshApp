@@ -16,6 +16,8 @@ if (string.IsNullOrEmpty(connectionString))
 {
     connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTION_STRING")?.Trim();
 }
+connectionString = Encoding.UTF8.GetString(Convert.FromBase64String(connectionString));
+Console.WriteLine(connectionString);
 
 // Register the AppDbContext with the Dependency Injection container.
 // We configure it to use SQL Server, reading the connection string from appsettings.json.
