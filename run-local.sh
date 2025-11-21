@@ -23,9 +23,6 @@ if [ -z "$AZURE_SQL_CONNECTION_STRING" ]; then
     exit 1
 fi
 
-# Set the connection string for .NET
-export ConnectionStrings__DefaultConnection="$AZURE_SQL_CONNECTION_STRING"
-
 echo "✅ Environment variables loaded!"
 echo "🚀 Starting application..."
 echo ""
