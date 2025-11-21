@@ -1,36 +1,14 @@
-version: '3.8'
-services:
-  # Local SQL Server (for local development only)
-  # Comment this out when using Azure SQL Database
-  sqlserver:
-    image: mcr.microsoft.com/azure-sql-edge
-    container_name: sqlserver_local
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
-    ports:
-      - "1433:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
-    profiles:
-      - local-db # Only start this when using local database
+version: "3.9"
 
-  # Your .NET Application
-  app:
+services:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: DotNetRefreshApp
     ports:
-      - "5173:8080"
+      - "5000:5000"
+    env_file:
+      - .env
     environment:
-      # Override the connection string with Azure SQL Database
-      - ConnectionStrings__DefaultConnection=${AZURE_SQL_CONNECTION_STRING}
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-    depends_on:
-      - sqlserver
-    # Remove depends_on when using Azure SQL (no local DB needed)
-
-volumes:
-  sqlserver_data:
+      ASPNETCORE_ENVIRONMENT: "Production"
+    restart: unless-stopped

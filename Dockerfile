@@ -1,21 +1,20 @@
-# Build stage
+# Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
-# Copy csproj and restore dependencies
-COPY *.csproj ./
+COPY ["DotNetRefreshApp.csproj", "./"]
 RUN dotnet restore
 
-# Copy everything else and build
-COPY . ./
+COPY . .
 RUN dotnet publish -c Release -o /app/publish
 
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+# Stage 2: Run
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Expose port 8080 (internal container port)
-EXPOSE 8080
+# Expose port your app runs on
+EXPOSE 5000
 
+# Run the app
 ENTRYPOINT ["dotnet", "DotNetRefreshApp.dll"]

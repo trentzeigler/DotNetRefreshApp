@@ -252,11 +252,36 @@ messageInput.addEventListener('keypress', (e) => {
 
 // Sign out button
 const signOutButton = document.getElementById('signOutButton');
+let isSigningOut = false;
+
 signOutButton.addEventListener('click', () => {
+    isSigningOut = true;
     // Clear session storage
     sessionStorage.clear();
     // Redirect to login
     window.location.href = '/api/auth/login';
+});
+
+// Restore chat history on load
+const savedHistory = sessionStorage.getItem('chatHistory');
+if (savedHistory) {
+    chatMessages.innerHTML = savedHistory;
+    // Remove any typing indicator that might have been saved
+    const savedIndicator = document.getElementById('typing-indicator');
+    if (savedIndicator) {
+        savedIndicator.remove();
+    }
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    // Clear it after restoring so we don't keep stale data if the user navigates away and back without refreshing
+    // But the requirement says "then delete", which implies we consume it.
+    sessionStorage.removeItem('chatHistory');
+}
+
+// Save chat history before unload
+window.addEventListener('beforeunload', () => {
+    if (!isSigningOut && chatMessages.innerHTML.trim()) {
+        sessionStorage.setItem('chatHistory', chatMessages.innerHTML);
+    }
 });
 
 // Focus input on load

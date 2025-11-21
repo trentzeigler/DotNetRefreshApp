@@ -107,13 +107,15 @@ namespace DotNetRefreshApp.Controllers
         [HttpPost("conversation/{conversationId}")]
         public async Task StreamChat([FromBody] ChatRequest request, [FromRoute] string conversationId, [FromServices] EmailAgentService emailAgent)
         {
+            _logger.LogInformation($"Starting chat stream for conversation {conversationId}, User {request.UserId}. Message: {request.Message}");
+
             Response.Headers.Add("Content-Type", "text/event-stream");
             Response.Headers.Add("Cache-Control", "no-cache");
             Response.Headers.Add("Connection", "keep-alive");
 
             try
             {
-                // Get UserId from JWT claims
+                // Get UserId from JWT claims 
                 var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
                 {
@@ -215,6 +217,7 @@ namespace DotNetRefreshApp.Controllers
                     iteration++;
                     
                     // Call OpenAI with streaming
+                    _logger.LogInformation($"Calling LLM (Iteration {iteration}) with {chatMessages.Count} messages");
                     var currentResponse = new StringBuilder();
                     var toolCallsDict = new Dictionary<int, (string id, string name, StringBuilder args)>();
                     
@@ -260,6 +263,11 @@ namespace DotNetRefreshApp.Controllers
                         }
                     }
 
+                    if (currentResponse.Length > 0)
+                    {
+                        _logger.LogInformation($"LLM Response (Iteration {iteration}): {currentResponse}");
+                    }
+
                     // If no tool calls, we're done
                     if (toolCallsDict.Count == 0)
                     {
@@ -271,6 +279,7 @@ namespace DotNetRefreshApp.Controllers
                     {
                         var toolName = name;
                         var toolArgs = args.ToString();
+                        _logger.LogInformation($"LLM requested tool: {toolName} with args: {toolArgs}");
 
                         // Stream tool call info to frontend
                         var toolCallJson = System.Text.Json.JsonSerializer.Serialize(new 

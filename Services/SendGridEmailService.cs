@@ -51,10 +51,18 @@ namespace DotNetRefreshApp.Services
                 var to = new EmailAddress(email.To);
                 var msg = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.IsHtml ? email.Body : null);
                 var response = await client.SendEmailAsync(msg);
+                var responseBody = await response.Body.ReadAsStringAsync();
+                _logger.LogInformation($"SendGrid response status: {response.StatusCode}");
+                _logger.LogInformation($"SendGrid response body: {responseBody}");
 
-                _logger.LogInformation($"Email sent to: {email.To}, Subject: {email.Subject}");
-                _logger.LogInformation($"From: {email.From}");
-                _logger.LogInformation($"Body: {email.Body}");
+                if (response.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation($"Email sent successfully to: {email.To}, Subject: {email.Subject}");
+                }
+                else
+                {
+                    _logger.LogError($"Failed to send email. Status: {response.StatusCode}, Body: {responseBody}");
+                }
 
                 return response.IsSuccessStatusCode;
             }
