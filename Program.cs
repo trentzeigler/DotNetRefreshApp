@@ -7,11 +7,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+// Add services to the container.
 
-// DEBUG: Log what connection string we're actually getting
-var coded = "U2VydmVyPXRjcDpkb3RuZXQtcG9jLmRhdGFiYXNlLndpbmRvd3MubmV0LDE0MzM7SW5pdGlhbCBDYXRhbG9nPWRvdG5ldC1wb2M7UGVyc2lzdCBTZWN1cml0eSBJbmZvPUZhbHNlO1VzZXIgSUQ9dHJlbnR6ZWlnbGVyO1Bhc3N3b3JkPSNLZXdsS2F0MzI7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPUZhbHNlO0VuY3J5cHQ9VHJ1ZTtUcnVzdFNlcnZlckNlcnRpZmljYXRlPUZhbHNlO0Nvbm5lY3Rpb24gVGltZW91dD0zMDs=";
-var connectionString = coded.Trim();
+var connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTION_STRING")?.Trim();
 connectionString = Encoding.UTF8.GetString(Convert.FromBase64String(connectionString));
 Console.WriteLine(connectionString);
 
