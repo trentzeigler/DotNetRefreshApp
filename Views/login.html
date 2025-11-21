@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Assistant - Sign In</title>
+    <link rel="icon" type="image/svg+xml" href="/ai/favicon.svg">
+    <link rel="stylesheet" href="/api/auth/login.css">
+</head>
+
+<body>
+    <!-- Animated background blobs -->
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
+    <div class="background-blob blob-3"></div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>📧 Email Assistant</h1>
+                <p class="subtitle">AI-powered email management</p>
+            </div>
+
+            <!-- Error message display -->
+            <div id="errorMessage" class="error-message"></div>
+
+            <!-- Success message display -->
+            <div id="successMessage" class="success-message"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+                <h2>Sign In</h2>
+
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required autocomplete="email"
+                        placeholder="you@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required autocomplete="current-password"
+                        placeholder="Enter your password">
+                </div>
+
+                <button type="submit" class="auth-button">Sign In</button>
+
+                <p class="form-toggle">
+                    Don't have an account?
+                    <a href="#" id="showSignup">Create one</a>
+                </p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form" style="display: none;">
+                <h2>Create Account</h2>
+
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" name="name" required autocomplete="name" placeholder="John Doe"
+                        minlength="2">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required autocomplete="email"
+                        placeholder="you@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required autocomplete="new-password"
+                        placeholder="Min 10 chars, 1 special character" minlength="10">
+                    <small class="form-hint">
+                        Must be at least 10 characters with 1 special character (!@#$%^&*...)
+                    </small>
+                </div>
+
+                <button type="submit" class="auth-button">Create Account</button>
+
+                <p class="form-toggle">
+                    Already have an account?
+                    <a href="#" id="showLogin">Sign in</a>
+                </p>
+            </form>
+        </div>
+
+        <footer class="auth-footer">
+            <p>Powered by Trent Zeigler and OpenAI</p>
+        </footer>
+    </div>
+
+    <script src="/api/auth/login.js"></script>
+</body>
+
+</html>
