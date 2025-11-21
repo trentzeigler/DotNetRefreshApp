@@ -1,11 +1,11 @@
 # AI Email Assistant
 
-A modern, AI-powered email assistant built with .NET 7, OpenAI, and SendGrid. This application allows users to draft and send emails using natural language conversation.
+A modern, AI-powered email assistant built with .NET 7, OpenAI, and MailGun. This application allows users to draft and send emails using natural language conversation.
 
 ## Features
 
 - **AI Chat Interface**: Conversational interface powered by OpenAI (GPT-4).
-- **Email Drafting & Sending**: The AI can draft emails and send them via SendGrid upon user approval.
+- **Email Drafting & Sending**: The AI can draft emails and send them via MailGun upon user approval.
 - **Secure Authentication**: JWT-based authentication with secure password hashing (BCrypt).
 - **Mobile Responsive**: Fully responsive UI that works on desktop and mobile devices.
 - **Real-time Streaming**: Chat responses are streamed in real-time with typing indicators.
@@ -18,14 +18,14 @@ A modern, AI-powered email assistant built with .NET 7, OpenAI, and SendGrid. Th
 - **Database**: Azure SQL Database (Entity Framework Core)
 - **Frontend**: Vanilla HTML/CSS/JS (No framework overhead)
 - **AI**: OpenAI API (Chat Completions & Function Calling)
-- **Email**: SendGrid API
+- **Email**: MailGun API
 
 ## Prerequisites
 
 - .NET 7.0 SDK
 - SQL Server (LocalDB or Azure SQL)
 - OpenAI API Key
-- SendGrid API Key
+- MailGun API Key
 
 ## Setup
 
@@ -44,7 +44,8 @@ A modern, AI-powered email assistant built with .NET 7, OpenAI, and SendGrid. Th
     Required variables:
     - `OPENAI_API_KEY`: Your OpenAI API key
     - `OPENAI_MODEL`: Model to use (e.g., `gpt-4` or `gpt-3.5-turbo`)
-    - `SENDGRID_API_KEY`: Your SendGrid API key
+    - `MAILGUN_API_KEY`: Your MailGun API key
+    - `MAILGUN_DOMAIN`: Your MailGun domain
     - `JWT_SECRET`: A long, random string for signing tokens
     - `JWT_EXPIRATION_DAYS`: Token validity in days (e.g., 7)
     - `AZURE_SQL_CONNECTION_STRING`: Connection string for your SQL database

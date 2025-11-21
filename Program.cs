@@ -33,7 +33,8 @@ builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Register email services
-builder.Services.AddScoped<IEmailService, SendGridEmailService>();
+// Register email services
+builder.Services.AddHttpClient<IEmailService, MailgunEmailService>();
 builder.Services.AddScoped<EmailAgentService>();
 
 // Configure JWT Authentication
